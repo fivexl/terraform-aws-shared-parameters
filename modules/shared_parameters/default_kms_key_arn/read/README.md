@@ -1,6 +1,6 @@
 # Shared SSM parameter - `alias/default` KMS key ARN
 
-This module outputs the ARN of the `alias/default` KMS key. This is default key to be used for encryption across the environment. This module depends on pre-created KMS keys with ram resource share in every environment (dev, test, prod).
+This module outputs the ARN of the `alias/default` KMS key. This is default key to be used for encryption across the environment. This module depends on pre-created KMS keys with ram resource share in every environment (dev, test, prod). Module uses `resource_share_name = module.naming_conventions.default_kms_key_resource_share_name` to guess the resource share name.
 
 ## Usage
 ```hcl
