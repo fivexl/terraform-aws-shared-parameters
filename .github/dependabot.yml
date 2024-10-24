@@ -1,0 +1,41 @@
+version: 2
+
+updates:
+# Terraform - One entry per thing we want to scan as per https://github.com/dependabot/dependabot-core/issues/649
+  - package-ecosystem: "terraform"
+    directory: "./modules/ram_resource_share"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "terraform"
+    directory: "./modules/shared_parameter"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "terraform"
+    directory: "./modules/shared_parameter_data"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "terraform"
+    directory: "./modules/shared_parameters"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "terraform"
+    directory: "./modules/shared_parameters/chat_bot_topic_arn"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "terraform"
+    directory: "./modules/shared_parameters/default_kms_key_arn"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "terraform"
+    directory: "./modules/shared_parameters/org_info"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "terraform"
+    directory: "./modules/shared_parameters/s3_access_logs_replication"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "terraform"
+    directory: "./modules/shared_parameters/shared_kms_key_arn"
+    schedule:
+      interval: "weekly"
+
