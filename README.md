@@ -6,7 +6,7 @@ The main purpose of this module is to simplify and centralize the creation of sh
 - To create an SSM parameter that will be shared with specified principals via RAM, you can use the /shared_parameter module.
 - To read the value of the shared SSM parameter created with the /shared_parameter module, you can use the /shared_parameter_data module.
 - Both /shared_parameter and /shared_parameter_data are used in the /modules/shared_parameters directory to create and read shared SSM parameters.
-- You can use the /shared_parameters/* modules to create and read multiple shared SSM parameters across your organization, including:
+- You can use the /modules/*  to create and read multiple shared SSM parameters across your organization, including:
 - Chatbot topic ARN (shared with the entire Organization, allowing all accounts to send notifications to the chatbot)
 - KMS key ARN (shared with the entire Organization, allowing all accounts to encrypt/decrypt shared resources, such as shared SSM parameters)
 - Default KMS key ARN (recommended for every environment, enabling all accounts to encrypt/decrypt environment-specific resources such as dev, test, and prod)
@@ -19,7 +19,7 @@ The main purpose of this module is to simplify and centralize the creation of sh
   - List of account names and IDs
 
 
-Most of the modules in the `/modules/shared_parameters` are dependent on the other modules, for example:
+Most of the modules in the `/modules/*` are dependent on the other modules, for example:
   - chat_bot_topic_arn depends on shared_kms_key_arn and org_info parameters. 
 So please make sure to see more information inside of the module, and create the dependent parameters before using the module.
 
