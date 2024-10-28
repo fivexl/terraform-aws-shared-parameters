@@ -4,6 +4,30 @@ This module collects data from the s3_access_logs_replication SSM parameter and 
 You would need this information in any account from which you want to replicate access logs to `log-archive` account.
 See outputs for more information.
 
+## Usage
+```hcl
+
+module "s3_access_logs_replication_configuration_primary" {
+  source = "../shared_parameters/s3_access_logs_replication/read"
+
+  resource_owner = var.config.s3_access_logs_bucket_arn_resource_owner
+  providers = {
+    aws = aws.primary
+  }
+}
+
+module "s3_server_access_logs_lake_delivery_configuration_primary" {
+  source  = "fivexl/s3-server-access-logs-lake/aws//modules/delivery_configuration"
+  version = "0.0.1"
+  source_bucket_arn      = "arn:aws:s3:::${module.naming_conventions_primary.s3_access_logs_bucket_name}"
+  destination_account_id = module.s3_access_logs_replication_configuration_primary.account_id
+  destination_bucket_arn = module.s3_access_logs_replication_configuration_primary.bucket_arn
+
+  tags = var.config.tags
+  providers              = { aws = aws.primary }
+}
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
@@ -20,8 +44,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | ../../../naming_conventions | n/a |
-| <a name="module_shared_parameter_data"></a> [shared\_parameter\_data](#module\_shared\_parameter\_data) | ../../../shared_parameter_data | n/a |
+| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | fivexl/naming-convetions/aws | 0.0.1 |
+| <a name="module_shared_parameter_data"></a> [shared\_parameter\_data](#module\_shared\_parameter\_data) | ../../shared_parameter_data | n/a |
 
 ## Resources
 

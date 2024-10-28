@@ -3,6 +3,32 @@
 This module creates a SSM parameter that is shared by RAM with enrire aws organization. This parameter contains necessary information to configure S3 access logs replication to `log-archive` account, so that any child account in AWS organization can get inforation necessary to configure S3 access logs replication.
 It's intended to be created in the `log-archive` account, used by account_baseline module.
 
+## Usage
+    
+```hcl
+module "s3_access_logs_replication_configuration_shared_parameter_primary" {
+  source = "../../s3_access_logs_replication/create"
+
+  bucket_arn = module.s3_server_access_logs_lake_primary.s3_bucket_arn
+
+  tags = module.tags.result
+}
+
+module "s3_access_logs_replication_configuration_shared_parameter_secondary" {
+  source = "../../s3_access_logs_replication/create"
+
+  bucket_arn = module.s3_server_access_logs_lake_secondary.s3_bucket_arn
+
+  tags = module.tags.result
+
+  providers = {
+    aws = aws.secondary
+  }
+}
+```
+
+
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

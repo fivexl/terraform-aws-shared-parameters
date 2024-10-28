@@ -4,6 +4,14 @@ This module collects data from SSM parameter and provides it as outputs.
 Commonly you would need this information in the `security-sso` account to manage permissions.
 See outputs for more information.
 
+## Usage
+```hcl
+module "org_info" {
+  source = "../../org_info/read"
+}
+```
+
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

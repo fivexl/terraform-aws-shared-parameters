@@ -3,15 +3,15 @@ module "naming_conventions" {
   version = "0.0.1"
 }
 
-module "org_info" {
-  source = "../../../shared_parameter_data"
+module "shared_parameter_data" {
+  source = "../../shared_parameter_data"
 
-  resource_share_name = module.naming_conventions.org_info_ram_resource_share_name
+  resource_share_name = module.naming_conventions.s3_access_logs_replication_configuration_resource_share_name
   resource_owner      = var.resource_owner
 }
 
 locals {
-  org_info = nonsensitive(jsondecode(module.org_info.value))
+  data = nonsensitive(jsondecode(module.shared_parameter_data.value))
 }
 
 variable "resource_owner" {

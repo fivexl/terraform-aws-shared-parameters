@@ -4,7 +4,7 @@ module "naming_conventions" {
 }
 
 module "shared_parameter_data" {
-  source = "../../../shared_parameter_data"
+  source = "../../shared_parameter_data"
 
   resource_share_name = module.naming_conventions.default_kms_key_resource_share_name
   resource_owner      = var.resource_owner

@@ -5,6 +5,7 @@ module "naming_conventions" {
 
 module "shared_kms_key_arn" {
   source = "../../shared_kms_key_arn/read"
+
 }
 
 module "org_info" {
@@ -12,7 +13,7 @@ module "org_info" {
 }
 
 module "shared_parameter" {
-  source = "../../../shared_parameter"
+  source = "../../shared_parameter"
 
   parameter_name           = module.naming_conventions.chat_bot_topic_arn_ssm_parameter_name
   resource_share_name      = module.naming_conventions.chat_bot_topic_arn_resource_share_name

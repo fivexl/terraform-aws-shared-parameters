@@ -24,7 +24,7 @@ variable "tags" {
 }
 
 module "shared_parameter" {
-  source = "../../../shared_parameter"
+  source = "../../shared_parameter"
 
   parameter_name        = module.naming_conventions.s3_access_logs_replication_configuration_ssm_parameter_name
   resource_share_name   = module.naming_conventions.s3_access_logs_replication_configuration_resource_share_name

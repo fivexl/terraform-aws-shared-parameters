@@ -20,7 +20,7 @@ locals {
 }
 
 module "shared_chat_bot_topic_arn" {
-  source   = "../../../modules/external/shared_parameters/chat_bot_topic_arn/create"
+  source   = "../../chat_bot_topic_arn/create"
   for_each = local.topics_environment_configuration
 
   chat_bot_topic_arn = aws_sns_topic.chat_bot_environment_notifications[each.key].arn
@@ -45,10 +45,10 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | ../../../naming_conventions | n/a |
-| <a name="module_org_info"></a> [org\_info](#module\_org\_info) | ../../../shared_parameters/org_info/read | n/a |
-| <a name="module_shared_kms_key_arn"></a> [shared\_kms\_key\_arn](#module\_shared\_kms\_key\_arn) | ../../../shared_parameters/shared_kms_key_arn/read | n/a |
-| <a name="module_shared_parameter"></a> [shared\_parameter](#module\_shared\_parameter) | ../../../shared_parameter | n/a |
+| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | fivexl/naming-convetions/aws | 0.0.1 |
+| <a name="module_org_info"></a> [org\_info](#module\_org\_info) | ../../org_info/read | n/a |
+| <a name="module_shared_kms_key_arn"></a> [shared\_kms\_key\_arn](#module\_shared\_kms\_key\_arn) | ../../shared_kms_key_arn/read | n/a |
+| <a name="module_shared_parameter"></a> [shared\_parameter](#module\_shared\_parameter) | ../../shared_parameter | n/a |
 
 ## Resources
 
@@ -59,7 +59,6 @@ No resources.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_chat_bot_topic_arn"></a> [chat\_bot\_topic\_arn](#input\_chat\_bot\_topic\_arn) | The ARN of the SNS topic for chatbot notifications | `string` | n/a | yes |
-| <a name="input_environment"></a> [environment](#input\_environment) | The environment to deploy to | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to apply to resources | `map(string)` | n/a | yes |
 
 ## Outputs

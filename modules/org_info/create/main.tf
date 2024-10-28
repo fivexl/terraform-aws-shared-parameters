@@ -29,7 +29,7 @@ locals {
 }
 
 module "shared_parameter" {
-  source = "../../../shared_parameter"
+  source = "../../shared_parameter"
 
   parameter_name           = module.naming_conventions.org_info_ssm_parameter_name
   resource_share_name      = module.naming_conventions.org_info_ram_resource_share_name

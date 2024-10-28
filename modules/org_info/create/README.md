@@ -6,6 +6,43 @@ It's intended to be created in the `management` account, because it depends on `
 ## Usage
 For more information about output values and usage, please refer to `./read` module. 
 
+```hcl
+locals {
+  all_non_master_accounts= {
+    for account in data.aws_organizations_organization.this.non_master_accounts : account.name => {
+      id = account.id
+    }
+  }
+  root_id = data.aws_organizations_organization.this.roots[0].id
+  
+  security_ou_arn = [for ou in data.aws_organizations_organizational_units.root.children : ou if ou.name == "security"][0].arn
+  infrastructure_ou_arn = [for ou in data.aws_organizations_organizational_units.root.children : ou if ou.name == "infrastructure"][0].arn
+}
+
+data "aws_organizations_organizational_units" "root" {
+  parent_id = local.root_id
+}
+
+module "organization_info_shared_parameter_primary" {
+  source                   = "../../org_info/create"
+  shared_kms_key_arn       = module.shared_kms_key.primary_key_arn
+  principals_to_share_with = [local.security_ou_arn, local.infrastructure_ou_arn]
+  all_accounts = local.all_non_master_accounts
+  tags = module.tags.result
+}
+
+module "organization_info_shared_parameter_secondary" {
+  source                   = "../../org_info/create"
+  shared_kms_key_arn       = module.shared_kms_key.secondary_key_arn
+  principals_to_share_with = [local.security_ou_arn, local.infrastructure_ou_arn]
+  all_accounts = local.all_non_master_accounts
+  providers = {
+    aws = aws.secondary
+  }
+  tags = module.tags.result
+}
+```
+
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

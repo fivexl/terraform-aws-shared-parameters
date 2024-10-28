@@ -23,8 +23,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | ../../../naming_conventions | n/a |
-| <a name="module_shared_parameter_data"></a> [shared\_parameter\_data](#module\_shared\_parameter\_data) | ../../../shared_parameter_data | n/a |
+| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | fivexl/naming-convetions/aws | 0.0.1 |
+| <a name="module_shared_parameter_data"></a> [shared\_parameter\_data](#module\_shared\_parameter\_data) | ../../shared_parameter_data | n/a |
 
 ## Resources
 
@@ -34,7 +34,6 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_environment"></a> [environment](#input\_environment) | The environment to deploy the resources in | `string` | n/a | yes |
 | <a name="input_resource_owner"></a> [resource\_owner](#input\_resource\_owner) | The owner of the resource share | `string` | `"OTHER-ACCOUNTS"` | no |
 
 ## Outputs

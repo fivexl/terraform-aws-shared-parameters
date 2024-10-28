@@ -1,15 +1,17 @@
-# Shared SSM parameter - `alias/default` KMS key ARN
+# Shared SSM parameter - `alias/shared` KMS key ARN
 
-This module outputs the ARN of the `alias/default` KMS key. This is default key to be used for encryption across the environment. This module depends on pre-created KMS keys with ram resource share in every environment (dev, test, prod). Module uses `resource_share_name = module.naming_conventions.default_kms_key_resource_share_name` to guess the resource share name.
+This module outputs the ARN of the `alias/shared` KMS key. This key is created in management account, and shared with organization, so it would be used to encrypt all shared SSM parameters and other shared resources across the organization. `Naming_conventions` module is used to create this resource share in management account, and guess the resource share name in this module.
 
 ## Usage
+This module is intended to be used in child organization accounts, to get the ARN of the shared KMS key to encrypt shared across the organization resources.
+
 ```hcl
-module "kms_key_arn" {
-  source = "fivexl/shared-parameters/aws//modules/shared_parameters/default_kms_key_arn/read"
+module "shared_kms_key_arn" {
+  source = "../../shared_kms_key_arn/read"
 }
 
-output "kms_key_arn" {
-  value = module.kms_key_arn.value
+locals {
+  parameter_key_id      = module.shared_kms_key_arn.value
 }
 ```
 
