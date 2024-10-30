@@ -1,6 +1,7 @@
 module "naming_conventions" {
   source  = "fivexl/naming-convetions/aws"
   version = "0.0.1"
+  environment = var.environment
 }
 
 module "shared_kms_key_arn" {

@@ -8,3 +8,7 @@ variable "tags" {
   type        = map(string)
 }
 
+variable "environment" {
+  description = "The environment name: dev, stage, prod, for the generation of the ram resource share name"
+  type        = string
+}
