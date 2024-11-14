@@ -20,3 +20,15 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "parameter_name" {
+  description = "A name of the SSM parameter"
+  type        = string
+  default     = ""
+}
+
+variable "resource_share_name" {
+  description = "A name of resource share for org info paramater"
+  type        = string
+  default     = ""
+}

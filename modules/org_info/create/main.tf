@@ -8,7 +8,10 @@ data "aws_organizations_organization" "this" {}
 
 locals {
 
-  all_non_master_accounts= {
+  parameter_name      = var.parameter_name != "" ? var.parameter_name : module.naming_conventions.org_info_ssm_parameter_name
+  resource_share_name = var.resource_share_name != "" ? var.resource_share_name : module.naming_conventions.org_info_ram_resource_share_name
+
+  all_non_master_accounts = {
     for account in data.aws_organizations_organization.this.non_master_accounts : account.name => {
       id = account.id
     }
