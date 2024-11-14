@@ -20,10 +20,3 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
-
-variable "all_accounts" {
-  description = "A map of information about the accounts in the organization"
-  type = map(object({
-    id = string
-  }))
-}

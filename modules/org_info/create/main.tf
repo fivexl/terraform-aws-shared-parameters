@@ -7,13 +7,21 @@ data "aws_organizations_organization" "this" {}
 
 
 locals {
+
+  all_non_master_accounts= {
+    for account in data.aws_organizations_organization.this.non_master_accounts : account.name => {
+      id = account.id
+    }
+  }
+
   org_info = {
     org_arn           = data.aws_organizations_organization.this.arn
     root_id           = data.aws_organizations_organization.this.roots[0].id
     org_id            = data.aws_organizations_organization.this.id
     master_account_id = data.aws_organizations_organization.this.master_account_id
-    accounts = var.all_accounts
-    ous = local.ous_info
+    accounts          = local.all_non_master_accounts
+    ous               = local.ous_info
+
     environment_accounts = {
       for prefix in ["development", "production", "staging", "security", "infrastructure"] :
       prefix => compact(flatten([
