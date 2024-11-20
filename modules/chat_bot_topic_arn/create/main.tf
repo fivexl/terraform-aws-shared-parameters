@@ -1,6 +1,6 @@
 module "naming_conventions" {
-  source  = "fivexl/naming-conventions/aws"
-  version = "0.0.1"
+  source      = "fivexl/naming-conventions/aws"
+  version     = "0.0.1"
   environment = var.environment
 }
 
