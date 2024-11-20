@@ -45,7 +45,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | fivexl/naming-convetions/aws | 0.0.1 |
+| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | fivexl/naming-conventions/aws | 0.0.1 |
 | <a name="module_org_info"></a> [org\_info](#module\_org\_info) | ../../org_info/read | n/a |
 | <a name="module_shared_kms_key_arn"></a> [shared\_kms\_key\_arn](#module\_shared\_kms\_key\_arn) | ../../shared_kms_key_arn/read | n/a |
 | <a name="module_shared_parameter"></a> [shared\_parameter](#module\_shared\_parameter) | ../../shared_parameter | n/a |
