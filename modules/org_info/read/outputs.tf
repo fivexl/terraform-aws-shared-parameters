@@ -13,8 +13,8 @@ output "org_id" {
   description = "The ID of the organization"
 }
 
-output "environment_accounts" {
-  value       = local.org_info.environment_accounts
+output "accounts_by_environment" {
+  value       = local.org_info.accounts_by_environment
   description = "List of account IDs for each environment"
 }
 

@@ -19,7 +19,7 @@ locals {
     accounts          = local.all_non_master_accounts
     ous               = local.ous_info
 
-    environment_accounts = {
+    accounts_by_environment = {
       for prefix in ["development", "production", "staging", "security", "infrastructure"] :
       prefix => compact(flatten([
         for ou_key, ou in local.ous_info :

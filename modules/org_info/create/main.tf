@@ -1,17 +1,17 @@
 module "naming_conventions" {
   source  = "fivexl/naming-conventions/aws"
-  version = "0.0.1"
+  version = "0.0.2"
 }
 
-module "shared_parameter" {
-  source = "../../shared_parameter"
+module "shared_parameters" {
+  source   = "../../shared_parameter"
+  for_each = local.org_info
 
-  parameter_name           = module.naming_conventions.org_info_ssm_parameter_name
-  resource_share_name      = module.naming_conventions.org_info_ram_resource_share_name
-  parameter_description    = "Organization information including ARN, root ID, org ID, and account IDs"
+  parameter_name           = module.naming_conventions.org_info_ssm_parametes_names[each.key]
+  resource_share_name      = module.naming_conventions.org_info_ram_resource_share_names[each.key]
+  parameter_description    = "Shared SSM parameter for ${each.key}"
   parameter_key_id         = var.shared_kms_key_arn
-  parameter_value          = jsonencode(local.org_info)
+  parameter_value          = jsonencode(each.value)
   principals_to_share_with = var.principals_to_share_with
-
-  tags = var.tags
+  tags                     = var.tags
 }
