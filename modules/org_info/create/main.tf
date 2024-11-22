@@ -1,6 +1,6 @@
 module "naming_conventions" {
   source  = "fivexl/naming-conventions/aws"
-  version = "0.0.2"
+  version = "0.0.3"
 }
 
 module "shared_parameters" {
