@@ -17,7 +17,6 @@ locals {
     org_id            = data.aws_organizations_organization.this.id
     master_account_id = data.aws_organizations_organization.this.master_account_id
     accounts          = local.all_non_master_accounts
-    ous               = local.ous_info
 
     accounts_by_environment = {
       for prefix in ["development", "production", "staging", "security", "infrastructure"] :

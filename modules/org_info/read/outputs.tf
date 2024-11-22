@@ -28,12 +28,4 @@ output "accounts" {
   description = "The IDs of the organization's accounts, master account is excluded from the list."
 }
 
-output "ous" {
-  value       = local.org_info.ous
-  description = <<EOT
-  The organizational units (OUs) in the organization. The key is the name of the OU and the value is a map with the following attributes:
-  - id
-  - arn
-  - accounts: A list of account IDs that are in the OU (including nested OUs)
-  EOT
-}
+
