@@ -22,12 +22,19 @@ variable "parameter_description" {
 variable "parameter_key_id" {
   description = "The KMS key id or arn for encrypting the parameter"
   type        = string
+  default     = null
 }
 
 variable "parameter_type" {
   description = "Type of the parameter"
   type        = string
   default     = "SecureString"
+}
+
+variable "allow_external_principals" {
+  description = "(Optional) Indicates whether principals outside your organization can be associated with a resource share."
+  type        = bool
+  default     = false
 }
 
 variable "principals_to_share_with" {
