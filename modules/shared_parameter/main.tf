@@ -2,7 +2,7 @@ resource "aws_ssm_parameter" "this" {
   name        = var.parameter_name
   description = var.parameter_description
   type        = var.parameter_type
-  key_id      = var.parameter_key_id != null ? var.parameter_key_id : null
+  key_id      = var.parameter_key_id
   tier        = "Advanced"
   value       = var.parameter_value
   tags        = var.tags
