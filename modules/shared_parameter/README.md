@@ -33,13 +33,13 @@ module "organization_info_shared_parameter" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0, < 7.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.19.0 |
 
 ## Modules
 
@@ -57,12 +57,13 @@ module "organization_info_shared_parameter" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_allow_external_principals"></a> [allow\_external\_principals](#input\_allow\_external\_principals) | (Optional) Indicates whether principals outside your organization can be associated with a resource share. | `bool` | `false` | no |
 | <a name="input_parameter_description"></a> [parameter\_description](#input\_parameter\_description) | Description of the parameter | `string` | n/a | yes |
-| <a name="input_parameter_key_id"></a> [parameter\_key\_id](#input\_parameter\_key\_id) | The KMS key id or arn for encrypting the parameter | `string` | n/a | yes |
+| <a name="input_parameter_key_id"></a> [parameter\_key\_id](#input\_parameter\_key\_id) | The KMS key id or arn for encrypting the parameter | `string` | `null` | no |
 | <a name="input_parameter_name"></a> [parameter\_name](#input\_parameter\_name) | Name of the parameter | `string` | n/a | yes |
 | <a name="input_parameter_type"></a> [parameter\_type](#input\_parameter\_type) | Type of the parameter | `string` | `"SecureString"` | no |
 | <a name="input_parameter_value"></a> [parameter\_value](#input\_parameter\_value) | Value of the parameter | `string` | n/a | yes |
-| <a name="input_principals_to_share_with"></a> [principals\_to\_share\_with](#input\_principals\_to\_share\_with) | The principals to share the resource with. The format of the principal can be:<br>  an AWS account ID,<br>  an Amazon Resource Name (ARN) of an organization in AWS Organizations,<br>  an ARN of an organizational unit (OU) in AWS Organizations,<br>  an ARN of an IAM role, an ARN of an IAM user,<br>  or a service principal name. | `list(string)` | n/a | yes |
+| <a name="input_principals_to_share_with"></a> [principals\_to\_share\_with](#input\_principals\_to\_share\_with) | The principals to share the resource with. The format of the principal can be:<br/>  an AWS account ID,<br/>  an Amazon Resource Name (ARN) of an organization in AWS Organizations,<br/>  an ARN of an organizational unit (OU) in AWS Organizations,<br/>  an ARN of an IAM role, an ARN of an IAM user,<br/>  or a service principal name. | `list(string)` | n/a | yes |
 | <a name="input_resource_share_name"></a> [resource\_share\_name](#input\_resource\_share\_name) | Name of the resource share | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to apply to resources | `map(string)` | n/a | yes |
 

@@ -35,7 +35,7 @@ module "shared_chat_bot_topic_arn" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0, < 7.0 |
 
 ## Providers
 
@@ -45,7 +45,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | fivexl/naming-conventions/aws | 0.0.1 |
+| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | fivexl/naming-conventions/aws | 0.1.1 |
 | <a name="module_org_info"></a> [org\_info](#module\_org\_info) | ../../org_info/read | n/a |
 | <a name="module_shared_kms_key_arn"></a> [shared\_kms\_key\_arn](#module\_shared\_kms\_key\_arn) | ../../shared_kms_key_arn/read | n/a |
 | <a name="module_shared_parameter"></a> [shared\_parameter](#module\_shared\_parameter) | ../../shared_parameter | n/a |
@@ -59,6 +59,7 @@ No resources.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_chat_bot_topic_arn"></a> [chat\_bot\_topic\_arn](#input\_chat\_bot\_topic\_arn) | The ARN of the SNS topic for chatbot notifications | `string` | n/a | yes |
+| <a name="input_environment"></a> [environment](#input\_environment) | The environment name: dev, stage, prod, for the generation of the ram resource share name | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to apply to resources | `map(string)` | n/a | yes |
 
 ## Outputs
