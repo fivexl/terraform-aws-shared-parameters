@@ -10,10 +10,10 @@ This module depends on the following shared parameters:
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-| Name | Version |
-|------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0, < 7.0 |
+| Name                                                                      | Version       |
+| ------------------------------------------------------------------------- | ------------- |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0        |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws)                   | >= 5.0, < 7.0 |
 
 ## Providers
 
@@ -21,10 +21,10 @@ No providers.
 
 ## Modules
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | fivexl/naming-conventions/aws | 0.1.1 |
-| <a name="module_shared_parameter_data"></a> [shared\_parameter\_data](#module\_shared\_parameter\_data) | ../../shared_parameter_data | n/a |
+| Name                                                                                                    | Source                        | Version |
+| ------------------------------------------------------------------------------------------------------- | ----------------------------- | ------- |
+| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions)            | fivexl/naming-conventions/aws | 0.1.1   |
+| <a name="module_shared_parameter_data"></a> [shared\_parameter\_data](#module\_shared\_parameter\_data) | ../../shared_parameter_data   | n/a     |
 
 ## Resources
 
@@ -32,13 +32,13 @@ No resources.
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| <a name="input_resource_owner"></a> [resource\_owner](#input\_resource\_owner) | The owner of the resource share | `string` | `"OTHER-ACCOUNTS"` | no |
+| Name                                                                           | Description                     | Type     | Default            | Required |
+| ------------------------------------------------------------------------------ | ------------------------------- | -------- | ------------------ | :------: |
+| <a name="input_resource_owner"></a> [resource\_owner](#input\_resource\_owner) | The owner of the resource share | `string` | `"OTHER-ACCOUNTS"` |    no    |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
+| Name                                                | Description                   |
+| --------------------------------------------------- | ----------------------------- |
 | <a name="output_value"></a> [value](#output\_value) | The ARN of the shared KMS key |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
