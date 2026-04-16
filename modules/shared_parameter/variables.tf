@@ -14,6 +14,12 @@ variable "parameter_value" {
   type        = string
 }
 
+variable "ignore_value_changes" {
+  description = "Whether to ignore later out-of-band changes to the parameter value after creation. Enabling this on an already-managed parameter requires a terraform state mv."
+  type        = bool
+  default     = false
+}
+
 variable "parameter_description" {
   description = "Description of the parameter"
   type        = string

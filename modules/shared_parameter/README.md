@@ -18,13 +18,49 @@ module "organization_info_shared_parameter" {
   parameter_description    = "Organization information including ARN, root ID, org ID, and account IDs"
   parameter_key_id         = module.default_kms_key_arn.value
   parameter_value          = jsonencode(local.org_info)
-  principals_to_share_with = module.org_entities.created_ous["Security"].arn
+  principals_to_share_with = [module.org_entities.created_ous["Security"].arn]
   tags                     = module.tags.result
 
   providers = {
     aws = aws.primary
   }
 }
+```
+
+### Ignoring later value drift
+Set `ignore_value_changes = true` when Terraform should create the parameter with an initial value, but a human or another system will update the real value in AWS later. Terraform will continue managing the SSM parameter and RAM share, while ignoring later drift in `value`.
+
+```hcl
+module "shared_parameter_with_manual_rotation" {
+  source                   = "../../../../modules/shared_parameter"
+  parameter_name           = "/shared/example/api-token"
+  resource_share_name      = "shared-example-api-token"
+  parameter_description    = "Shared API token placeholder"
+  parameter_key_id         = module.default_kms_key_arn.value
+  parameter_value          = "initial-placeholder"
+  ignore_value_changes     = true
+  principals_to_share_with = [module.org_info.org_arn]
+  tags                     = module.tags.result
+}
+```
+
+AWS SSM Parameter Store requires a non-empty value when the parameter is created. `ignore_value_changes` does not change that requirement. Use a non-empty placeholder `parameter_value` if the real value will be set or rotated later outside Terraform.
+
+If you are enabling `ignore_value_changes` for a parameter that is already in Terraform state, move the state address before planning or applying the toggle:
+
+```bash
+terraform state mv \
+  'module.shared_parameter.aws_ssm_parameter.this[0]' \
+  'module.shared_parameter.aws_ssm_parameter.this_ignore_value[0]'
+```
+
+If you later disable `ignore_value_changes` again for an already-managed parameter, move the state back first:
+
+```bash
+terraform state mv \
+  'module.shared_parameter.aws_ssm_parameter.this_ignore_value[0]' \
+  'module.shared_parameter.aws_ssm_parameter.this[0]'
+```
 
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -32,14 +68,14 @@ module "organization_info_shared_parameter" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.0, < 2.0.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0, < 7.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.19.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.40.0 |
 
 ## Modules
 
@@ -52,12 +88,14 @@ module "organization_info_shared_parameter" {
 | Name | Type |
 |------|------|
 | [aws_ssm_parameter.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
+| [aws_ssm_parameter.this_ignore_value](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_allow_external_principals"></a> [allow\_external\_principals](#input\_allow\_external\_principals) | (Optional) Indicates whether principals outside your organization can be associated with a resource share. | `bool` | `false` | no |
+| <a name="input_ignore_value_changes"></a> [ignore\_value\_changes](#input\_ignore\_value\_changes) | Whether to ignore later out-of-band changes to the parameter value after creation. Enabling this on an already-managed parameter requires a terraform state mv. | `bool` | `false` | no |
 | <a name="input_parameter_description"></a> [parameter\_description](#input\_parameter\_description) | Description of the parameter | `string` | n/a | yes |
 | <a name="input_parameter_key_id"></a> [parameter\_key\_id](#input\_parameter\_key\_id) | The KMS key id or arn for encrypting the parameter | `string` | `null` | no |
 | <a name="input_parameter_name"></a> [parameter\_name](#input\_parameter\_name) | Name of the parameter | `string` | n/a | yes |
