@@ -6,7 +6,7 @@ resource "aws_ram_resource_share" "this" {
 }
 
 resource "aws_ram_resource_association" "this" {
-  for_each = var.number_of_resources == 1 ? { "this" : var.resources[0] } : { for p in var.resources : p => p }
+  for_each = var.resources
 
   resource_arn       = each.value
   resource_share_arn = aws_ram_resource_share.this.arn

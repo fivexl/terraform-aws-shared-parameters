@@ -41,7 +41,7 @@ module "ram_resource_share" {
   name                      = var.resource_share_name
   allow_external_principals = var.allow_external_principals
 
-  resources  = [local.parameter_arn]
+  resources  = { "this" = local.parameter_arn }
   principals = var.principals_to_share_with
 
   tags = var.tags
