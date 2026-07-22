@@ -15,16 +15,21 @@ module "vpc_ram_resource_share" {
 
   name = module.vpc.vpc_id
 
-  resources = concat(
-    module.vpc.private_subnet_arns,
-    module.vpc.database_subnet_arns,
-    module.vpc.public_subnet_arns,
+  # Keys must be known at plan time; values (ARNs) can be unknown until apply.
+  resources = merge(
+    { for i in range(local.number_of_subnets) : "private-${i}" => module.vpc.private_subnet_arns[i] },
+    { for i in range(local.number_of_subnets) : "database-${i}" => module.vpc.database_subnet_arns[i] },
+    { for i in range(local.number_of_subnets) : "public-${i}" => module.vpc.public_subnet_arns[i] },
   )
   principals = var.vpc.principals_to_share_with
 
   tags = module.tags.result
 }
 ```
+
+> **Breaking change:** The `resources` variable is now `map(string)` instead of `list(string)`.
+> Map keys are used as stable `for_each` identifiers and must be known at plan time.
+> The `number_of_resources` variable has been removed.
 
 ### Examples:
 
@@ -60,10 +65,9 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_allow_external_principals"></a> [allow\_external\_principals](#input\_allow\_external\_principals) | (Optional) Indicates whether principals outside your organization can be associated with a resource share. | `bool` | `false` | no |
 | <a name="input_name"></a> [name](#input\_name) | (Required) The name of the resource share. | `string` | n/a | yes |
-| <a name="input_number_of_resources"></a> [number\_of\_resources](#input\_number\_of\_resources) | The number of resources to associate with the resource share | `number` | `1` | no |
 | <a name="input_permission_arns"></a> [permission\_arns](#input\_permission\_arns) | (Optional) Specifies the Amazon Resource Names (ARNs) of the RAM permission to associate with the resource share. If you do not specify an ARN for the permission, RAM automatically attaches the default version of the permission for each resource type. You can associate only one permission with each resource type included in the resource share. | `list(string)` | `null` | no |
 | <a name="input_principals"></a> [principals](#input\_principals) | (Required) The principals to associate with the resource share. Possible values are an AWS account ID, an AWS Organizations Organization ARN, or an AWS Organizations Organization Unit ARN. | `list(string)` | n/a | yes |
-| <a name="input_resources"></a> [resources](#input\_resources) | (Required) Amazon Resource Name (ARN's) of the resources to associate with the RAM Resource Share. | `list(string)` | n/a | yes |
+| <a name="input_resources"></a> [resources](#input\_resources) | (Required) Map of stable identifiers to Amazon Resource Name (ARN's) of the resources to associate with the RAM Resource Share. Keys must be known at plan time; values (ARNs) may be unknown until apply. | `map(string)` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional) Key-value map of resource tags | `map(string)` | `{}` | no |
 
 ## Outputs
