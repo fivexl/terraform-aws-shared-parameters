@@ -21,18 +21,12 @@ variable "principals" {
 }
 
 variable "resources" {
-  description = "(Required) Amazon Resource Name (ARN's) of the resources to associate with the RAM Resource Share."
-  type        = list(string)
+  description = "(Required) Map of stable identifiers to Amazon Resource Name (ARN's) of the resources to associate with the RAM Resource Share. Keys must be known at plan time; values (ARNs) may be unknown until apply."
+  type        = map(string)
 }
 
 variable "tags" {
   description = "(Optional) Key-value map of resource tags"
   type        = map(string)
   default     = {}
-}
-
-variable "number_of_resources" {
-  description = "The number of resources to associate with the resource share"
-  type        = number
-  default     = 1
 }
