@@ -35,7 +35,7 @@ module "shared_parameter" {
     bucket_arn = var.bucket_arn
   })
   parameter_type           = "SecureString"
-  principals_to_share_with = [module.org_info.org_arn]
+  principals_to_share_with = { org = module.org_info.org_arn }
 
   tags = var.tags
 }

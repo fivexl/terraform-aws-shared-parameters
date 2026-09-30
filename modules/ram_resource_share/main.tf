@@ -13,7 +13,7 @@ resource "aws_ram_resource_association" "this" {
 }
 
 resource "aws_ram_principal_association" "this" {
-  for_each = { for p in var.principals : p => p }
+  for_each = var.principals
 
   principal          = each.value
   resource_share_arn = aws_ram_resource_share.this.arn

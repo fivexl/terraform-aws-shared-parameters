@@ -18,7 +18,7 @@ module "organization_info_shared_parameter" {
   parameter_description    = "Organization information including ARN, root ID, org ID, and account IDs"
   parameter_key_id         = module.default_kms_key_arn.value
   parameter_value          = jsonencode(local.org_info)
-  principals_to_share_with = [module.org_entities.created_ous["Security"].arn]
+  principals_to_share_with = { security = module.org_entities.created_ous["Security"].arn }
   tags                     = module.tags.result
 
   providers = {
@@ -39,7 +39,7 @@ module "shared_parameter_with_manual_rotation" {
   parameter_key_id         = module.default_kms_key_arn.value
   parameter_value          = "initial-placeholder"
   ignore_value_changes     = true
-  principals_to_share_with = [module.org_info.org_arn]
+  principals_to_share_with = { org = module.org_info.org_arn }
   tags                     = module.tags.result
 }
 ```
@@ -63,37 +63,60 @@ terraform state mv \
 ```
 
 
+> **Breaking change:** `principals_to_share_with` is now `map(string)` instead of
+> `list(string)`. The map keys are used as `for_each` identifiers for the RAM principal
+> associations, so they must be known at plan time; the values (principal ARNs) may stay
+> unknown until apply. Previously the principal ARNs were used as the keys themselves,
+> which made `terraform plan` fail with `Invalid for_each argument` whenever a principal
+> was created in the same run, forcing a `-target` two-step apply.
+>
+> Migrating: wrap each element in a key of your choosing, then move the state address,
+> because the key is part of the resource address.
+>
+> ```hcl
+> # before
+> principals_to_share_with = [local.security_ou_arn]
+> # after
+> principals_to_share_with = { security = local.security_ou_arn }
+> ```
+>
+> ```bash
+> terraform state mv \
+>   'module.example.module.ram_resource_share.aws_ram_principal_association.this["arn:aws:organizations::111122223333:ou/o-abc123/ou-abc1-11111111"]' \
+>   'module.example.module.ram_resource_share.aws_ram_principal_association.this["security"]'
+> ```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.0, < 2.0.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0, < 7.0 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.40.0 |
+| ---- | ------- |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.0, < 7.0 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_ram_resource_share"></a> [ram\_resource\_share](#module\_ram\_resource\_share) | ../ram_resource_share | n/a |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_ssm_parameter.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
 | [aws_ssm_parameter.this_ignore_value](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssm_parameter) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_allow_external_principals"></a> [allow\_external\_principals](#input\_allow\_external\_principals) | (Optional) Indicates whether principals outside your organization can be associated with a resource share. | `bool` | `false` | no |
 | <a name="input_ignore_value_changes"></a> [ignore\_value\_changes](#input\_ignore\_value\_changes) | Whether to ignore later out-of-band changes to the parameter value after creation. Enabling this on an already-managed parameter requires a terraform state mv. | `bool` | `false` | no |
 | <a name="input_parameter_description"></a> [parameter\_description](#input\_parameter\_description) | Description of the parameter | `string` | n/a | yes |
@@ -101,7 +124,7 @@ terraform state mv \
 | <a name="input_parameter_name"></a> [parameter\_name](#input\_parameter\_name) | Name of the parameter | `string` | n/a | yes |
 | <a name="input_parameter_type"></a> [parameter\_type](#input\_parameter\_type) | Type of the parameter | `string` | `"SecureString"` | no |
 | <a name="input_parameter_value"></a> [parameter\_value](#input\_parameter\_value) | Value of the parameter | `string` | n/a | yes |
-| <a name="input_principals_to_share_with"></a> [principals\_to\_share\_with](#input\_principals\_to\_share\_with) | The principals to share the resource with. The format of the principal can be:<br/>  an AWS account ID,<br/>  an Amazon Resource Name (ARN) of an organization in AWS Organizations,<br/>  an ARN of an organizational unit (OU) in AWS Organizations,<br/>  an ARN of an IAM role, an ARN of an IAM user,<br/>  or a service principal name. | `list(string)` | n/a | yes |
+| <a name="input_principals_to_share_with"></a> [principals\_to\_share\_with](#input\_principals\_to\_share\_with) | Map of stable identifiers to the principals to share the resource with.<br/>  Keys are used as for\_each identifiers and MUST be known at plan time;<br/>  values may be unknown until apply (e.g. the ARN of an OU created in the<br/>  same run). The format of the principal value can be:<br/>  an AWS account ID,<br/>  an Amazon Resource Name (ARN) of an organization in AWS Organizations,<br/>  an ARN of an organizational unit (OU) in AWS Organizations,<br/>  an ARN of an IAM role, an ARN of an IAM user,<br/>  or a service principal name. | `map(string)` | n/a | yes |
 | <a name="input_resource_share_name"></a> [resource\_share\_name](#input\_resource\_share\_name) | Name of the resource share | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to apply to resources | `map(string)` | n/a | yes |
 

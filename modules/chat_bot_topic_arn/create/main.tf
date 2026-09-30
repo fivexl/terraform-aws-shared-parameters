@@ -21,7 +21,7 @@ module "shared_parameter" {
   parameter_description    = "Chatbot topic ARN for notifications and alerts"
   parameter_key_id         = module.shared_kms_key_arn.value
   parameter_value          = var.chat_bot_topic_arn
-  principals_to_share_with = [module.org_info.org_arn]
+  principals_to_share_with = { org = module.org_info.org_arn }
 
   tags = var.tags
 }

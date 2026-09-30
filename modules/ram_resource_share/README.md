@@ -27,9 +27,22 @@ module "vpc_ram_resource_share" {
 }
 ```
 
-> **Breaking change:** The `resources` variable is now `map(string)` instead of `list(string)`.
-> Map keys are used as stable `for_each` identifiers and must be known at plan time.
+> **Breaking change:** The `resources` and `principals` variables are now `map(string)`
+> instead of `list(string)`. Map keys are used as stable `for_each` identifiers and must
+> be known at plan time, while the values (ARNs) may stay unknown until apply.
 > The `number_of_resources` variable has been removed.
+>
+> Keying `for_each` on the values themselves fails the plan with
+> `Invalid for_each argument` whenever a value is only known after apply -- an OU ARN for
+> an OU created in the same run, for example -- and forces a `-target` two-step apply.
+> Give each principal a caller-chosen key instead:
+>
+> ```hcl
+> principals = {
+>   security       = aws_organizations_organizational_unit.security.arn
+>   infrastructure = aws_organizations_organizational_unit.infrastructure.arn
+> }
+> ```
 
 ### Examples:
 
@@ -37,15 +50,15 @@ module "vpc_ram_resource_share" {
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~>1.3 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.27.0, < 7.0.0 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.19.0 |
+| ---- | ------- |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.27.0, < 7.0.0 |
 
 ## Modules
 
@@ -54,7 +67,7 @@ No modules.
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_ram_principal_association.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ram_principal_association) | resource |
 | [aws_ram_resource_association.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ram_resource_association) | resource |
 | [aws_ram_resource_share.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ram_resource_share) | resource |
@@ -62,18 +75,18 @@ No modules.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_allow_external_principals"></a> [allow\_external\_principals](#input\_allow\_external\_principals) | (Optional) Indicates whether principals outside your organization can be associated with a resource share. | `bool` | `false` | no |
 | <a name="input_name"></a> [name](#input\_name) | (Required) The name of the resource share. | `string` | n/a | yes |
 | <a name="input_permission_arns"></a> [permission\_arns](#input\_permission\_arns) | (Optional) Specifies the Amazon Resource Names (ARNs) of the RAM permission to associate with the resource share. If you do not specify an ARN for the permission, RAM automatically attaches the default version of the permission for each resource type. You can associate only one permission with each resource type included in the resource share. | `list(string)` | `null` | no |
-| <a name="input_principals"></a> [principals](#input\_principals) | (Required) The principals to associate with the resource share. Possible values are an AWS account ID, an AWS Organizations Organization ARN, or an AWS Organizations Organization Unit ARN. | `list(string)` | n/a | yes |
+| <a name="input_principals"></a> [principals](#input\_principals) | (Required) Map of stable identifiers to principals to associate with the resource share. Keys must be known at plan time; values may be unknown until apply. Possible values are an AWS account ID, an AWS Organizations Organization ARN, or an AWS Organizations Organization Unit ARN. | `map(string)` | n/a | yes |
 | <a name="input_resources"></a> [resources](#input\_resources) | (Required) Map of stable identifiers to Amazon Resource Name (ARN's) of the resources to associate with the RAM Resource Share. Keys must be known at plan time; values (ARNs) may be unknown until apply. | `map(string)` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | (Optional) Key-value map of resource tags | `map(string)` | `{}` | no |
 
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_resource_share_arn"></a> [resource\_share\_arn](#output\_resource\_share\_arn) | The Amazon Resource Name (ARN) of the resource share. |
 | <a name="output_resource_share_id"></a> [resource\_share\_id](#output\_resource\_share\_id) | The Amazon Resource Name (ARN) of the resource share. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
