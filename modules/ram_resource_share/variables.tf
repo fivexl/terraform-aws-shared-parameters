@@ -16,8 +16,8 @@ variable "allow_external_principals" {
 }
 
 variable "principals" {
-  description = "(Required) The principals to associate with the resource share. Possible values are an AWS account ID, an AWS Organizations Organization ARN, or an AWS Organizations Organization Unit ARN."
-  type        = list(string)
+  description = "(Required) Map of stable identifiers to principals to associate with the resource share. Keys must be known at plan time; values may be unknown until apply. Possible values are an AWS account ID, an AWS Organizations Organization ARN, or an AWS Organizations Organization Unit ARN."
+  type        = map(string)
 }
 
 variable "resources" {

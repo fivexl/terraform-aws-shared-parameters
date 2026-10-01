@@ -4,9 +4,12 @@ variable "shared_kms_key_arn" {
 }
 
 variable "principals_to_share_with" {
-  type        = list(string)
+  type        = map(string)
   description = <<EOT
-  The principals to share the parameter with. The format of the principal can be:
+  Map of stable identifiers to the principals to share the parameter with.
+  Keys are used as for_each identifiers and MUST be known at plan time;
+  values may be unknown until apply (e.g. the ARN of an OU created in the
+  same run). The format of the principal value can be:
   an AWS account ID,
   an Amazon Resource Name (ARN) of an organization in AWS Organizations,
   an ARN of an organizational unit (OU) in AWS Organizations,
