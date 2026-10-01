@@ -85,6 +85,27 @@ terraform state mv \
 >   'module.example.module.ram_resource_share.aws_ram_principal_association.this["arn:aws:organizations::111122223333:ou/o-abc123/ou-abc1-11111111"]' \
 >   'module.example.module.ram_resource_share.aws_ram_principal_association.this["security"]'
 > ```
+>
+> That address assumes you call `shared_parameter` directly. If you reach it through one of
+> the wrapper modules in this repo, the address has an extra `module.shared_parameter` (or
+> `module.shared_parameters[...]`) segment, and the wrapper's own inputs do not change --
+> only the state address does:
+>
+> | Caller | Address prefix before `aws_ram_principal_association.this[...]` |
+> | ------ | -------------------------------------------------------------- |
+> | `shared_parameter` directly | `module.<name>.module.ram_resource_share.` |
+> | `chat_bot_topic_arn/create` | `module.<name>.module.shared_parameter.module.ram_resource_share.` |
+> | `s3_access_logs_replication/create` | `module.<name>.module.shared_parameter.module.ram_resource_share.` |
+> | `org_info/create` | `module.<name>.module.shared_parameters["<org_info key>"].module.ram_resource_share.` |
+>
+> `org_info/create` fans out over `local.org_info`, so it needs one move per
+> (parameter, principal) pair -- six parameters times your principal count. Each wrapper
+> README documents its own commands. Rather than transcribing ARNs, read the real
+> addresses out of state:
+>
+> ```bash
+> terraform state list | grep 'aws_ram_principal_association'
+> ```
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements

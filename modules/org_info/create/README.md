@@ -47,6 +47,7 @@ module "organization_info_shared_parameter_secondary" {
   }
   tags = module.tags.result
 }
+```
 
 > **Breaking change:** `principals_to_share_with` is now `map(string)` instead of
 > `list(string)`. The map keys become the `for_each` identifiers of the underlying RAM
@@ -55,7 +56,6 @@ module "organization_info_shared_parameter_secondary" {
 > same run -- previously that failed the plan with `Invalid for_each argument` and needed a
 > `-target` two-step apply. See the `shared_parameter` module README for the
 > `terraform state mv` migration.
-```
 
 
 <!-- BEGIN_TF_DOCS -->
