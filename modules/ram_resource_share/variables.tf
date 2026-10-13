@@ -1,3 +1,9 @@
+variable "region" {
+  description = "Region for the RAM share and its associations. Defaults to the provider region."
+  type        = string
+  default     = null
+}
+
 variable "name" {
   description = "(Required) The name of the resource share."
   type        = string
