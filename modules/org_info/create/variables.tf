@@ -1,3 +1,18 @@
+variable "org_info" {
+  description = "Precomputed organization metadata from org_info/discover. When null, discover it automatically."
+  type = object({
+    org_arn           = string
+    root_id           = string
+    org_id            = string
+    master_account_id = string
+    accounts = map(object({
+      id = string
+    }))
+    accounts_by_environment = map(list(string))
+  })
+  default = null
+}
+
 variable "shared_kms_key_arn" {
   description = "The ARN of the KMS key to use for encrypting the shared parameter"
   type        = string

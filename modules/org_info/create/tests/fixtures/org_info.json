@@ -1,0 +1,40 @@
+{
+  "org_arn": "arn:aws:organizations::111111111111:organization/o-testorg123",
+  "root_id": "r-root",
+  "org_id": "o-testorg123",
+  "master_account_id": "111111111111",
+  "accounts": {
+    "development-account": {
+      "id": "111111111112"
+    },
+    "production-account": {
+      "id": "111111111113"
+    },
+    "staging-account": {
+      "id": "111111111114"
+    },
+    "security-account": {
+      "id": "111111111115"
+    },
+    "infrastructure-account": {
+      "id": "111111111116"
+    }
+  },
+  "accounts_by_environment": {
+    "development": [
+      "111111111112"
+    ],
+    "production": [
+      "111111111113"
+    ],
+    "staging": [
+      "111111111114"
+    ],
+    "security": [
+      "111111111115"
+    ],
+    "infrastructure": [
+      "111111111116"
+    ]
+  }
+}
