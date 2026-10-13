@@ -7,6 +7,7 @@ module "shared_parameters" {
   source   = "../../shared_parameter"
   for_each = local.org_info
 
+  region                   = var.region
   parameter_name           = module.naming_conventions.org_info_ssm_parametes_names[each.key]
   resource_share_name      = module.naming_conventions.org_info_ram_resource_share_names[each.key]
   parameter_description    = "Shared SSM parameter for ${each.key}"
