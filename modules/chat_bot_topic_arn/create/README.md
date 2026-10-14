@@ -60,8 +60,7 @@ terraform state list | grep 'aws_ram_principal_association'
 A `terraform plan` that reports `0 to add, 0 to destroy` for
 `aws_ram_principal_association` confirms the moves were complete.
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -97,4 +96,4 @@ No resources.
 ## Outputs
 
 No outputs.
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
