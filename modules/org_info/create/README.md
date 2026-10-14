@@ -90,7 +90,7 @@ module "organization_info_shared_parameter_secondary" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0, < 7.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0, < 7.0 |
 
 ## Providers
 
@@ -115,6 +115,7 @@ No resources.
 | <a name="input_org_info"></a> [org\_info](#input\_org\_info) | Precomputed organization metadata from org\_info/discover. When null, discover it automatically. | <pre>object({<br/>    org_arn           = string<br/>    root_id           = string<br/>    org_id            = string<br/>    master_account_id = string<br/>    accounts = map(object({<br/>      id = string<br/>    }))<br/>    accounts_by_environment = map(list(string))<br/>  })</pre> | `null` | no |
 | <a name="input_parameter_name"></a> [parameter\_name](#input\_parameter\_name) | A name of the SSM parameter | `string` | `""` | no |
 | <a name="input_principals_to_share_with"></a> [principals\_to\_share\_with](#input\_principals\_to\_share\_with) | Map of stable identifiers to the principals to share the parameter with.<br/>  Keys are used as for\_each identifiers and MUST be known at plan time;<br/>  values may be unknown until apply (e.g. the ARN of an OU created in the<br/>  same run). The format of the principal value can be:<br/>  an AWS account ID,<br/>  an Amazon Resource Name (ARN) of an organization in AWS Organizations,<br/>  an ARN of an organizational unit (OU) in AWS Organizations,<br/>  an ARN of an IAM role, an ARN of an IAM user,<br/>  or a service principal name. | `map(string)` | n/a | yes |
+| <a name="input_region"></a> [region](#input\_region) | Region for the shared parameters and their RAM shares. Defaults to the provider region. | `string` | `null` | no |
 | <a name="input_resource_share_name"></a> [resource\_share\_name](#input\_resource\_share\_name) | A name of resource share for org info paramater | `string` | `""` | no |
 | <a name="input_shared_kms_key_arn"></a> [shared\_kms\_key\_arn](#input\_shared\_kms\_key\_arn) | The ARN of the KMS key to use for encrypting the shared parameter | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to add to the resources created by this module | `map(string)` | `{}` | no |

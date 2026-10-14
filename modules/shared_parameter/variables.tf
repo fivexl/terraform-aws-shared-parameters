@@ -1,3 +1,8 @@
+variable "region" {
+  description = "Region for the parameter and its RAM share. Defaults to the provider region."
+  type        = string
+  default     = null
+}
 
 variable "parameter_name" {
   description = "Name of the parameter"

@@ -13,6 +13,12 @@ variable "org_info" {
   default = null
 }
 
+variable "region" {
+  description = "Region for the shared parameters and their RAM shares. Defaults to the provider region."
+  type        = string
+  default     = null
+}
+
 variable "shared_kms_key_arn" {
   description = "The ARN of the KMS key to use for encrypting the shared parameter"
   type        = string
