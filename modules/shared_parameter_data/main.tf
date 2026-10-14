@@ -23,3 +23,8 @@ output "value" {
   description = "value - Value of the parameter. This value is always marked as sensitive in the Terraform plan output, regardless of type. In Terraform CLI version 0.15 and later, this may require additional configuration handling for certain scenarios. For more information, see the Terraform v0.15 Upgrade Guide."
   value       = data.aws_ssm_parameter.this.value
 }
+
+output "arn" {
+  description = "The ARN of the shared SSM parameter"
+  value       = data.aws_ssm_parameter.this.arn
+}

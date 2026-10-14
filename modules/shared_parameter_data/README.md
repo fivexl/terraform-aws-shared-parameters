@@ -58,5 +58,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the shared SSM parameter |
 | <a name="output_value"></a> [value](#output\_value) | value - Value of the parameter. This value is always marked as sensitive in the Terraform plan output, regardless of type. In Terraform CLI version 0.15 and later, this may require additional configuration handling for certain scenarios. For more information, see the Terraform v0.15 Upgrade Guide. |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
