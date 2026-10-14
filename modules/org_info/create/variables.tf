@@ -1,3 +1,18 @@
+variable "org_info" {
+  description = "Precomputed organization metadata from org_info/discover. When null, discover it automatically."
+  type = object({
+    org_arn           = string
+    root_id           = string
+    org_id            = string
+    master_account_id = string
+    accounts = map(object({
+      id = string
+    }))
+    accounts_by_environment = map(list(string))
+  })
+  default = null
+}
+
 variable "region" {
   description = "Region for the shared parameters and their RAM shares. Defaults to the provider region."
   type        = string

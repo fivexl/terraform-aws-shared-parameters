@@ -1,3 +1,9 @@
+module "discover" {
+  count = var.org_info == null ? 1 : 0
+
+  source = "../discover"
+}
+
 module "naming_conventions" {
   source  = "fivexl/naming-conventions/aws"
   version = "0.1.1"
