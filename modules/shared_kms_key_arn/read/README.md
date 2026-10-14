@@ -18,7 +18,10 @@ locals {
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0, < 7.0 |
 
 ## Providers
 
@@ -28,8 +31,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_kms_key_arn"></a> [kms\_key\_arn](#module\_kms\_key\_arn) | ../../../shared_parameter_data | n/a |
-| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | ../../../naming_conventions | n/a |
+| <a name="module_kms_key_arn"></a> [kms\_key\_arn](#module\_kms\_key\_arn) | ../../shared_parameter_data | n/a |
+| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | fivexl/naming-conventions/aws | 0.1.1 |
 
 ## Resources
 

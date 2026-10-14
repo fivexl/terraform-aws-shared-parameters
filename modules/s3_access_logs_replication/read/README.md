@@ -28,7 +28,7 @@ module "s3_server_access_logs_lake_delivery_configuration_primary" {
 }
 ```
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -63,4 +63,4 @@ No resources.
 |------|-------------|
 | <a name="output_account_id"></a> [account\_id](#output\_account\_id) | The account ID of the owner of the S3 bucket. |
 | <a name="output_bucket_arn"></a> [bucket\_arn](#output\_bucket\_arn) | The ARN of the S3 bucket where access logs should be delivered. |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->

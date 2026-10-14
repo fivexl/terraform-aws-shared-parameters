@@ -17,8 +17,8 @@ module "org_info" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.27 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.0, < 7.0 |
 
 ## Providers
 
@@ -28,8 +28,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | ../../../naming_conventions | n/a |
-| <a name="module_org_info"></a> [org\_info](#module\_org\_info) | ../../../shared_parameter_data | n/a |
+| <a name="module_naming_conventions"></a> [naming\_conventions](#module\_naming\_conventions) | fivexl/naming-conventions/aws | 0.1.1 |
+| <a name="module_org_info"></a> [org\_info](#module\_org\_info) | ../../shared_parameter_data | n/a |
 
 ## Resources
 
@@ -46,6 +46,7 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_accounts"></a> [accounts](#output\_accounts) | The IDs of the organization's accounts, master account is excluded from the list. |
+| <a name="output_accounts_by_environment"></a> [accounts\_by\_environment](#output\_accounts\_by\_environment) | List of account IDs for each environment |
 | <a name="output_master_account_id"></a> [master\_account\_id](#output\_master\_account\_id) | The ID of the organization's master account |
 | <a name="output_org_arn"></a> [org\_arn](#output\_org\_arn) | The ARN of the organization |
 | <a name="output_org_id"></a> [org\_id](#output\_org\_id) | The ID of the organization |
